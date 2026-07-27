@@ -23,23 +23,36 @@ public class UserServiceTest {
     @Test
     public void testCreateUser() {
         try{
-                this.userService.createUser("name", "pwd", 0);
+                this.userService.createUser("name", "name@test.com", "pwd", "Bob", "Bane");
                 assertThat(true).isFalse();
         }
         catch(IllegalArgumentException e) {
             assertThat(e.getMessage().equals("User password must be at least 4 characters!")).isTrue();
         }
-
-        this.userService.createUser("name", "pwd1234", 0);
-        assertThat(this.userService.getUserRepo().getNrOfUsers()==1).isTrue();
+        
+        this.userService.createUser("name", "name@test.com", "pwd1234", "Bob", "Bane");
+        assertThat(this.userService.count()==1).isTrue();
+        assertThat(this.userService.findByEmail("name@test.com").getId() == 0L).isTrue();
 
         try{
-                this.userService.createUser("name", "pwd1234", 0);
+                this.userService.createUser("name", "name@test.com", "pwd1234", "Bob", "Bane");
                 assertThat(true).isFalse();
         }
         catch(IllegalArgumentException e) {
-            assertThat(e.getMessage().equals("User id must be unique")).isTrue();
+            assertThat(e.getMessage().equals("User with this email already exists!")).isTrue();
         }
     }
-    
+
+    @Test
+    public void testDeleteById() {
+        try {
+            this.userService.deleteById(1L);
+        }
+        catch (Exception e) {
+            assertThat(e.getMessage().equals("There is no user with id 1")).isTrue();
+        }
+
+        this.userService.deleteById(0L);
+        assertThat(this.userService.count()==0).isTrue();
+    }
 }

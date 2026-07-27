@@ -1,17 +1,14 @@
 package com.example.spring_boot_project.service;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import com.example.spring_boot_project.model.User;
 import com.example.spring_boot_project.repository.UserRepo;
 
-@Component
+@Service
 public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private UserRepo userRepo;
@@ -20,25 +17,37 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public UserRepo getUserRepo() {
-        return this.userRepo;
-    }
+    public void createUser( String username, String email, String password, String firstName, String lastName) {
+        log.info("Attempting to create a new user with name: {}", username);
 
-    public void createUser(String name, String pwd, int id) {
-        log.info("Attempting to create a new user with name: {}", name);
-
-        if (pwd.length() < 4) {
+        if (password.length() < 4) {
             throw new IllegalArgumentException("User password must be at least 4 characters!");
         }
-
-        if (this.userRepo.existsUserWithId(id)) {
-            throw new IllegalArgumentException("User id must be unique");
+        
+        if(this.userRepo.findByEmail(email)!=null) {
+            throw new IllegalArgumentException("User with this email already exists!");
         }
-        User user = new User(name, pwd, id);
-        this.userRepo.addUser(user);
+
+        User user = new User(username,  email,  password,  firstName,  lastName);
+        this.userRepo.save(user);
     }
 
-    public List<User> getUsers() {
-        return this.userRepo.getUsers();
+    public Page<User> findAll() {
+        return this.userRepo.findAll(PageRequest.of(0, 10));
+    }
+
+    public void deleteById(Long id) {
+        if (!this.userRepo.existsById(id)) {
+            throw new IllegalArgumentException("There is no user with id "+id);
+        }
+        this.userRepo.deleteById(id);
+    }
+
+    public User findByEmail(String email) {
+        return this.userRepo.findByEmail(email);
+    }
+
+    public long count() {
+        return this.userRepo.count();
     }
 }

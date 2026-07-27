@@ -1,32 +1,39 @@
 package com.example.spring_boot_project.model;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode
+@Entity
+@Table(name = "users")
 public class User {
 
-    @NotBlank(message = "Name cannot be blank")
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+    private String email;
+    private String password;
+    private String firstName;
+    private String lastName;
 
-    @NotBlank(message = "Password cannot be blank")
-    @Size(min = 4)
-    private String pwd;
-
-    @NotBlank(message = "Id cannot be blank")
-    private int id;
-
-    public User(String name, String pwd, int id) {
-       this.name = name;
-       this.pwd = pwd; 
-       this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public int getId() {
-        return this.id;
+    public User( String username, String email, String password, String firstName, String lastName) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 }
