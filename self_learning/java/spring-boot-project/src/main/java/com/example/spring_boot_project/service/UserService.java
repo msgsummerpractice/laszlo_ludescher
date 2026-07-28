@@ -9,8 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.example.spring_boot_project.dto.UserResponse;
 import com.example.spring_boot_project.model.User;
-import com.example.spring_boot_project.model.UserResponse;
 import com.example.spring_boot_project.repository.UserRepo;
 
 @Service
@@ -24,10 +24,6 @@ public class UserService {
 
     public UserResponse create( String username, String email, String password, String firstName, String lastName) {
         log.info("Attempting to create a new user with name: {}", username);
-
-        if (password.length() < 4) {
-            throw new IllegalArgumentException("User password must be at least 4 characters!");
-        }
         
         if(this.userRepo.findByEmail(email)!=null) {
             throw new IllegalArgumentException("User with this email already exists!");
@@ -53,13 +49,9 @@ public class UserService {
         });
     }
 
-    public List<UserResponse> findAll() {
-        List<UserResponse> userResponses = new ArrayList<UserResponse>();
-        Page<User> users = this.userRepo.findAll(PageRequest.of(0, 10));
-        for (User user : users) {
-            userResponses.add(this.convertToResponse(user));
-        }
-        return userResponses;
+    public Page<UserResponse> findAll(int page, int size) {
+        Page<User> users = this.userRepo.findAll(PageRequest.of(page, size));
+        return users.map(user -> convertToResponse(user));
     }
 
     public void deleteById(Long id) {

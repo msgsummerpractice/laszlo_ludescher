@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.spring_boot_project.model.UpdateUserPasswordRequest;
+import com.example.spring_boot_project.dto.UpdateUserPasswordRequest;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;

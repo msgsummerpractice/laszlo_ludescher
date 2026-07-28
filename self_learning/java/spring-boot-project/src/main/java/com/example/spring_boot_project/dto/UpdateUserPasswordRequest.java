@@ -1,4 +1,4 @@
-package com.example.spring_boot_project.model;
+package com.example.spring_boot_project.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

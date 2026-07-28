@@ -2,6 +2,7 @@ package com.example.spring_boot_project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.spring_boot_project.model.UpdateUserPasswordRequest;
+import com.example.spring_boot_project.dto.UpdateUserPasswordRequest;
+import com.example.spring_boot_project.dto.UserRequest;
+import com.example.spring_boot_project.dto.UserResponse;
 import com.example.spring_boot_project.model.User;
-import com.example.spring_boot_project.model.UserRequest;
-import com.example.spring_boot_project.model.UserResponse;
 import com.example.spring_boot_project.service.UserService;
 
 import jakarta.validation.Valid;
@@ -27,7 +29,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @Validated
-@RequestMapping
+//@RequestMapping(value = "/users", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+@RequestMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     private UserService userService;
@@ -37,20 +40,19 @@ public class UserController {
         this.userService = userService;
     }
     
-    @GetMapping(value="/users", produces = {
-        MediaType.APPLICATION_JSON_VALUE,
-        MediaType.APPLICATION_XML_VALUE
-    })
-    ResponseEntity<List<UserResponse>> findAll() {
-        return ResponseEntity.ok(userService.findAll());
+    @GetMapping
+    ResponseEntity<Page<UserResponse>> findAll(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(userService.findAll(page, size));
     }
   
-    @PostMapping(value="/users", produces = {
-        MediaType.APPLICATION_JSON_VALUE,
-        MediaType.APPLICATION_XML_VALUE
-    })
-    UserResponse newUser(@Valid @RequestBody UserRequest request) {
-        return userService.create(request.getUsername(),request.getEmail(),request.getPassword(),request.getFirstName(), request.getLastName());
+    @PostMapping
+    ResponseEntity<UserResponse> newUser(@Valid @RequestBody UserRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+            userService.create(request.getUsername(),request.getEmail(),request.getPassword(),request.getFirstName(), request.getLastName())
+        );
     }
 
     @PutMapping(value="/users/{id}", produces = {
