@@ -23,19 +23,19 @@ public class UserServiceTest {
     @Test
     public void testCreateUser() {
         try{
-                this.userService.createUser("name", "name@test.com", "pwd", "Bob", "Bane");
+                this.userService.create("name", "name@test.com", "pwd", "Bob", "Bane");
                 assertThat(true).isFalse();
         }
         catch(IllegalArgumentException e) {
             assertThat(e.getMessage().equals("User password must be at least 4 characters!")).isTrue();
         }
         
-        this.userService.createUser("name", "name@test.com", "pwd1234", "Bob", "Bane");
+        this.userService.create("name", "name@test.com", "pwd1234", "Bob", "Bane");
         assertThat(this.userService.count()==1).isTrue();
         assertThat(this.userService.findByEmail("name@test.com").getId() == 0L).isTrue();
 
         try{
-                this.userService.createUser("name", "name@test.com", "pwd1234", "Bob", "Bane");
+                this.userService.create("name", "name@test.com", "pwd1234", "Bob", "Bane");
                 assertThat(true).isFalse();
         }
         catch(IllegalArgumentException e) {

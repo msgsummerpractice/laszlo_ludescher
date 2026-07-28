@@ -1,4 +1,8 @@
 package com.example.spring_boot_project.service;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -6,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_boot_project.model.User;
+import com.example.spring_boot_project.model.UserResponse;
 import com.example.spring_boot_project.repository.UserRepo;
 
 @Service
@@ -17,7 +22,7 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public void createUser( String username, String email, String password, String firstName, String lastName) {
+    public UserResponse create( String username, String email, String password, String firstName, String lastName) {
         log.info("Attempting to create a new user with name: {}", username);
 
         if (password.length() < 4) {
@@ -30,24 +35,86 @@ public class UserService {
 
         User user = new User(username,  email,  password,  firstName,  lastName);
         this.userRepo.save(user);
+        return this.convertToResponse(user);
     }
 
-    public Page<User> findAll() {
-        return this.userRepo.findAll(PageRequest.of(0, 10));
+    public UserResponse update(User newUser, Long id) {
+        return this.userRepo.findById(id)
+        .map(user -> {
+            user.setUsername(newUser.getUsername());
+            user.setPassword(newUser.getPassword());
+            user.setEmail(newUser.getEmail());
+            user.setFirstName(newUser.getFirstName());
+            user.setLastName(newUser.getLastName());
+            return this.convertToResponse(this.userRepo.save(user));
+        })
+        .orElseGet(() -> {
+            return this.convertToResponse(this.userRepo.save(newUser));
+        });
+    }
+
+    public List<UserResponse> findAll() {
+        List<UserResponse> userResponses = new ArrayList<UserResponse>();
+        Page<User> users = this.userRepo.findAll(PageRequest.of(0, 10));
+        for (User user : users) {
+            userResponses.add(this.convertToResponse(user));
+        }
+        return userResponses;
     }
 
     public void deleteById(Long id) {
-        if (!this.userRepo.existsById(id)) {
+        if (!userRepo.existsById(id)) {
             throw new IllegalArgumentException("There is no user with id "+id);
         }
-        this.userRepo.deleteById(id);
+        userRepo.deleteById(id);
     }
 
-    public User findByEmail(String email) {
-        return this.userRepo.findByEmail(email);
+    public UserResponse updatePassword(Long id, String newPassword) {
+        return userRepo.findById(id)
+        .map(user -> {
+            user.setPassword(newPassword);
+            userRepo.save(user);
+            return convertToResponse(user);
+        })
+        .orElseGet(() -> {
+            throw new IllegalArgumentException("There is no user with id "+id);
+        });
+    }
+    
+
+    public UserResponse findByEmail(String email) {
+        User user = this.userRepo.findByEmail(email);
+        if (user==null) {
+            throw new IllegalArgumentException("There is no user with this email");
+        }
+        return this.convertToResponse(user);
+    }
+
+    public UserResponse findById(Long id) {
+        Optional<User> user = this.userRepo.findById(id);
+        
+        if (user==null) {
+            throw new IllegalArgumentException("There is no user with this id");
+        }
+        return this.convertToResponse(user.get());
     }
 
     public long count() {
         return this.userRepo.count();
+    }
+
+    private UserResponse convertToResponse(User user) {
+        UserResponse response = new UserResponse();
+        response.setId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
+        response.setFirstName(user.getFirstName());
+        response.setLastName(user.getLastName());
+        return response;
+    }
+
+    public String encryptPassword(String password) {
+        /*TODO: encription */
+        return password;
     }
 }
