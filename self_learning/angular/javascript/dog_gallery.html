@@ -3,11 +3,21 @@
     <title>Dog Gallery</title>
 </header>
 <body>
+    <style>
+        .image-container {
+            display: flex;
+            justify-content: center;       
+            height: 300px;
+            padding:50px;
+        }
+    </style>
     <h1>
         Random Dog Gallery
     </h1>
     <button onClick="showDog()">Show me a dog</button>
-    <img id="image" src="" />
+    <div class="image-container">
+        <img id="image" src="" />
+    </div>
     <script>
         async function showDog() {
             try {
