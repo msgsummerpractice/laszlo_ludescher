@@ -42,6 +42,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /*
     @Bean
     public UserDetailsService userDetailsService(){
 
@@ -59,4 +60,5 @@ public class SecurityConfig {
 
         return new InMemoryUserDetailsManager(username,admin);
     }
+        */
 }

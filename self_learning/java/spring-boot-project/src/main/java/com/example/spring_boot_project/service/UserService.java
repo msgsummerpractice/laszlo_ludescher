@@ -25,7 +25,7 @@ public class UserService {
     public UserResponse create( String username, String email, String password, String firstName, String lastName) {
         log.info("Attempting to create a new user with name: {}", username);
         
-        if(this.userRepo.findByEmail(email)!=null) {
+        if(this.userRepo.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("User with this email already exists!");
         }
 
@@ -75,17 +75,17 @@ public class UserService {
     
 
     public UserResponse findByEmail(String email) {
-        User user = this.userRepo.findByEmail(email);
-        if (user==null) {
+        Optional<User> userOpt = this.userRepo.findByEmail(email);
+        if (this.userRepo.findByEmail(email).isPresent()) {
             throw new IllegalArgumentException("There is no user with this email");
         }
-        return this.convertToResponse(user);
+        return this.convertToResponse(userOpt.get());
     }
 
     public UserResponse findById(Long id) {
         Optional<User> user = this.userRepo.findById(id);
         
-        if (user==null) {
+        if (user.isEmpty()) {
             throw new IllegalArgumentException("There is no user with this id");
         }
         return this.convertToResponse(user.get());
