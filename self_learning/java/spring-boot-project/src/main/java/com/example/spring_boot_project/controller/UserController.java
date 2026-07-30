@@ -1,5 +1,6 @@
 package com.example.spring_boot_project.controller;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -32,8 +33,7 @@ public class UserController {
     public String getUserMessage(
         @RequestParam
         @NotEmpty(message = "User id must be specified")
-        @Min(value = 1000, message = "Id must be at least 1000")
-        @Max(value = 9999, message = "Id must be smaller or equal to 9999")
+        @Length(min = 4, max=4, message = "Id must be at least 1000")
         String id
     ) {
         return "Hello there! Your id is: " + id + " (This app is running on port "+port+ " and ip "+ip+")";

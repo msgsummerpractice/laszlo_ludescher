@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.example.spring_boot_project.model.User;
 import com.example.spring_boot_project.repository.UserRepo;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private UserRepo userRepo;

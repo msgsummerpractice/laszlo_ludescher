@@ -12,10 +12,8 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class SpringBootProjectApplication {
-	private static final Logger log = LoggerFactory.getLogger(UserService.class);
-
+private static final Logger log = LoggerFactory.getLogger(SpringBootProjectApplication.class);
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(SpringBootProjectApplication.class, args);
-		UserService userService = context.getBean(UserService.class);
+		SpringApplication.run(SpringBootProjectApplication.class, args);
 	}
 }
