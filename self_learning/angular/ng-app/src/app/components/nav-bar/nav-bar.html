@@ -1,0 +1,27 @@
+<mat-toolbar-row
+  class="absolute top-0 left-0 right-0 flex items-center z-10 justify-between bg-linear-to-b from-olive-500 to-olive-300"
+>
+  <div>
+    <a mat-button routerLink="home" style="color: var(--color-gray-900)">Home</a>
+    <a mat-button routerLink="login" style="color: var(--color-gray-900)">Log in</a>
+  </div>
+  <div class="flex gap-4 items-center p-2">
+    <current-user></current-user>
+    <button
+      mat-button
+      routerLink="login"
+      class="flex items-center"
+      style="color: var(--color-gray-900)"
+    >
+      <mat-icon aria-hidden="false" aria-label="login icon" fontIcon="login"></mat-icon>
+    </button>
+    <button
+      mat-button
+      routerLink="home"
+      class="flex items-center"
+      style="color: var(--color-gray-900)"
+    >
+      <mat-icon aria-hidden="false" aria-label="home icon" fontIcon="home"></mat-icon>
+    </button>
+  </div>
+</mat-toolbar-row>

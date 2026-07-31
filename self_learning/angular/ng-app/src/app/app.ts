@@ -5,22 +5,15 @@ import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { ImageViewerComponent } from './components/image-viewer.component';
 import { HttpClient } from '@angular/common/http';
-import { NotFound } from './not-found/not-found';
-import { Login } from './login/login';
-import { CurrentUser } from './current-user/current-user';
+import { Login } from './components/login/login';
+import { CurrentUser } from './components/current-user/current-user';
+import { Home } from './components/home/home';
+import { NavBar } from './components/nav-bar/nav-bar';
+import { NotFound } from './components/not-found/not-found';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    Login,
-    RouterOutlet,
-    MatButton,
-    MatToolbarRow,
-    MatIcon,
-    ImageViewerComponent,
-    NotFound,
-    CurrentUser,
-  ],
+  imports: [RouterOutlet, NavBar],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

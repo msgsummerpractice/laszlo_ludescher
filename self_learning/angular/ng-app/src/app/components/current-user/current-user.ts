@@ -33,7 +33,6 @@ export class IfAuthenticatedDirective {
   selector: 'current-user',
   imports: [CommonModule, IfAuthenticatedDirective],
   templateUrl: './current-user.html',
-  styleUrl: './current-user.css',
 })
 export class CurrentUser {
   isAuthenticated = true;

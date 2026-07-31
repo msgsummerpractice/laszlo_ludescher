@@ -6,7 +6,6 @@ import { MatToolbarRow } from '@angular/material/toolbar';
   selector: 'not-found',
   imports: [MatToolbarRow, MatIcon],
   templateUrl: './not-found.html',
-  styleUrl: './not-found.css',
   standalone: true,
 })
 export class NotFound {}
