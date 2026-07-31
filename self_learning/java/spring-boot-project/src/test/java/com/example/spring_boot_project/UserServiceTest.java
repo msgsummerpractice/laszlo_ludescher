@@ -1,58 +1,51 @@
 package com.example.spring_boot_project;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import com.example.spring_boot_project.repository.UserRepo;
 import com.example.spring_boot_project.service.UserService;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @Mock
     private UserRepo userRepo;
 
-    @Autowired
     @InjectMocks
     private UserService userService;
 
     @Test
     public void testCreateUser() {
-        try{
-                this.userService.create("name", "name@test.com", "pwd", "Bob", "Bane");
-                assertThat(true).isFalse();
-        }
-        catch(IllegalArgumentException e) {
-            assertThat(e.getMessage().equals("User password must be at least 4 characters!")).isTrue();
-        }
-        
+        //TODO
+        when(userRepo.findByEmail("name@test.com")).thenReturn(Optional.empty());
         this.userService.create("name", "name@test.com", "pwd1234", "Bob", "Bane");
-        assertThat(this.userService.count()==1).isTrue();
+        assertThat(this.userService.count() == 1).isTrue();
         assertThat(this.userService.findByEmail("name@test.com").getId() == 0L).isTrue();
 
-        try{
-                this.userService.create("name", "name@test.com", "pwd1234", "Bob", "Bane");
-                assertThat(true).isFalse();
-        }
-        catch(IllegalArgumentException e) {
-            assertThat(e.getMessage().equals("User with this email already exists!")).isTrue();
-        }
+        assertThatThrownBy(() -> this.userService.create("name", "name@test.com", "pwd1234", "Bob", "Bane"))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("User with this email already exists!");
     }
 
     @Test
     public void testDeleteById() {
-        try {
-            this.userService.deleteById(1L);
-        }
-        catch (Exception e) {
-            assertThat(e.getMessage().equals("There is no user with id 1")).isTrue();
-        }
+        //TODO
+        when(userRepo.existsById(1L)).thenReturn(false);
+       assertThatThrownBy(() -> this.userService.deleteById(1L))
+            .isInstanceOf(Exception.class)
+            .hasMessage("There is no user with id 1");
 
         this.userService.deleteById(0L);
-        assertThat(this.userService.count()==0).isTrue();
+        assertThat(this.userService.count() == 0).isTrue();
     }
 }

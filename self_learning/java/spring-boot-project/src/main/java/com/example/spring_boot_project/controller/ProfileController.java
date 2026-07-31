@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProfileController {
-   @Value("${spring.profiles.active}")
+   @Value("${spring.profiles.active:default}")
    private String activeProfile;
    @GetMapping("/active-profile")
    public String getActiveProfile() {
