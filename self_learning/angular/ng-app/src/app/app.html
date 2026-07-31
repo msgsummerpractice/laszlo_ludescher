@@ -1,4 +1,4 @@
-<div class="flex flex-col relative">
+<div class="flex flex-col relative h-full">
   <mat-toolbar-row
     class="absolute top-0 left-0 right-0 flex items-center z-10 justify-between bg-linear-to-b from-olive-500 to-olive-300"
   >
@@ -6,7 +6,8 @@
       <a mat-button href="#home" style="color: var(--color-gray-900)">Home</a>
       <a mat-button href="#gallery" style="color: var(--color-gray-900)">Gallery</a>
     </div>
-    <div class="p-2 flex gap-4">
+    <div class="p-2 flex gap-4 items-center">
+      <current-user></current-user>
       <button>
         <mat-icon aria-hidden="false" aria-label="home icon" fontIcon="home"></mat-icon>
       </button>

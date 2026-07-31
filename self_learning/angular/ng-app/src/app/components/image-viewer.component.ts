@@ -9,17 +9,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'image-viewer',
-  standalone: true,
   template: `
     <div class="flex flex-col justify-center py-15">
-      <style>
-        .image-container {
-          display: flex;
-          justify-content: center;
-          height: 300px;
-          padding: 50px;
-        }
-      </style>
       <button
         id="showDogBtn"
         (click)="showDogImage()"
@@ -30,9 +21,9 @@ import { HttpClient } from '@angular/common/http';
     </div>
     @if (imageUrl()) {
       <div
-        class=" bg-slate-300 border-olive-400 shadow-xl/30 rounded-xl min-w p-4 flex items-center justify-center"
+        class="w-76 h-80 bg-slate-300 border-olive-400 shadow-xl/30 rounded-xl min-w p-4 flex items-center justify-center"
       >
-        <img id="image" [src]="imageUrl()" class="w-full h-72 object-cover rounded-lg" />
+        <img id="image" [src]="imageUrl()" class="w-72 h-72 object-cover rounded-lg" />
       </div>
     }
   `,

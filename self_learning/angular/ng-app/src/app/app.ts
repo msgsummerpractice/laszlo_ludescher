@@ -5,10 +5,22 @@ import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
 import { ImageViewerComponent } from './components/image-viewer.component';
 import { HttpClient } from '@angular/common/http';
+import { NotFound } from './not-found/not-found';
+import { Login } from './login/login';
+import { CurrentUser } from './current-user/current-user';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatButton, MatToolbarRow, MatIcon, ImageViewerComponent],
+  imports: [
+    Login,
+    RouterOutlet,
+    MatButton,
+    MatToolbarRow,
+    MatIcon,
+    ImageViewerComponent,
+    NotFound,
+    CurrentUser,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
