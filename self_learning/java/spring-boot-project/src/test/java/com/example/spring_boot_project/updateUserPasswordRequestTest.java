@@ -14,7 +14,7 @@ import jakarta.validation.Validator;
 
 
 @SpringBootTest
-public class updateUserPasswordRequestTest {
+public class UpdateUserPasswordRequestTest {
 
     private Validator validator;
     
