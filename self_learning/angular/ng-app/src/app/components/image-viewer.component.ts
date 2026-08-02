@@ -1,9 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { interval } from 'rxjs';
-import { sample } from 'rxjs/operators';
-import { fromFetch } from 'rxjs/fetch';
 import { signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 

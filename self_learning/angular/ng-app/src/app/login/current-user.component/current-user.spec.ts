@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavBar } from './nav-bar';
+import { CurrentUser } from './current-user.component';
 
-describe('NavBar', () => {
-  let component: NavBar;
-  let fixture: ComponentFixture<NavBar>;
+describe('CurrentUser', () => {
+  let component: CurrentUser;
+  let fixture: ComponentFixture<CurrentUser>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavBar],
+      imports: [CurrentUser],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NavBar);
+    fixture = TestBed.createComponent(CurrentUser);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
