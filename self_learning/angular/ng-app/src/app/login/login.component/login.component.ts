@@ -34,10 +34,16 @@ export class Login {
   onFormSubmit() {
     if (this.loginFormGroup.valid) {
       console.log('getRawValue():', this.loginFormGroup.getRawValue());
-      console.log('getRawValue():', this.loginFormGroup.getRawValue());
-      this._authService.login();
+      const { email, password } = this.loginFormGroup.getRawValue();
+      this._authService.login(email, password).subscribe({
+        next: () => {
+          this._router.navigate(['home']);
+        },
+        error: (err) => {
+          alert('Invalid email or password');
+        },
+      });
       if (this._authService.isAuthenticated()) {
-        this._router.navigate(['home']);
       }
     }
   }

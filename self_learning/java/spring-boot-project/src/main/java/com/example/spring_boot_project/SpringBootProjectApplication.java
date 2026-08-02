@@ -1,5 +1,6 @@
 package com.example.spring_boot_project;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -13,6 +14,7 @@ import com.example.spring_boot_project.repository.RoleRepo;
 import com.example.spring_boot_project.repository.UserRepo;
 import com.example.spring_boot_project.service.UserService;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 
@@ -20,6 +22,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SpringBootProjectApplication {
 	private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
+	@Bean
+	public CommandLineRunner initDatabase(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+		return args -> {
+			if (userRepo.findByEmail("user@test.com").isEmpty()) {
+				User testUser = new User(
+					"tester", 
+					"user@test.com", 
+					passwordEncoder.encode("pwd123"), 
+					"Test", 
+					"User"
+				);
+				userRepo.save(testUser);
+				System.out.println("Test user created: user@test.com / pwd123");
+	
+			}
+		};
+	}
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(SpringBootProjectApplication.class, args);
 		RoleRepo roleRepo = context.getBean(RoleRepo.class);

@@ -33,7 +33,6 @@ export class ImageViewerComponent {
       message: string;
       status: string;
     };
-
     this.http
       .get<DogApiResponse>('https://dog.ceo/api/breeds/image/random', {
         responseType: 'json',

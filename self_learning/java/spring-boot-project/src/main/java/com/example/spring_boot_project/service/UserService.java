@@ -5,21 +5,28 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.spring_boot_project.dto.UserResponse;
 import com.example.spring_boot_project.model.User;
 import com.example.spring_boot_project.repository.UserRepo;
 
+
+
 @Service
 public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private UserRepo userRepo;
 
-    public UserService(UserRepo userRepo) {
+    private final BCryptPasswordEncoder encoder;
+
+    public UserService(UserRepo userRepo, BCryptPasswordEncoder encoder) {
         this.userRepo = userRepo;
+        this.encoder = encoder;
     }
 
     public UserResponse create( String username, String email, String password, String firstName, String lastName) {
@@ -106,7 +113,7 @@ public class UserService {
     }
 
     public String encryptPassword(String password) {
-        /*TODO: encription */
+        encoder.encode(password);
         return password;
     }
 }
