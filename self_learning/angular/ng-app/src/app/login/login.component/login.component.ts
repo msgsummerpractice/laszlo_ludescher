@@ -1,20 +1,44 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../auth.service/auth.service';
-import { FormGroup, FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormsModule,
+  FormControl,
+  ReactiveFormsModule,
+  NonNullableFormBuilder,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+
+type LoginForm = {
+  email: FormControl<string>;
+  password: FormControl<string>;
+};
 
 @Component({
   selector: 'login',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
 })
 export class Login {
-  authService: AuthService = inject(AuthService);
-  profileForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+  private _authService: AuthService = inject(AuthService);
+  private _router: Router = inject(Router);
+
+  private readonly _formBuilder = inject(NonNullableFormBuilder);
+
+  protected readonly loginFormGroup = this._formBuilder.group<LoginForm>({
+    email: this._formBuilder.control('', Validators.required),
+    password: this._formBuilder.control('', Validators.required),
   });
 
-  submitLoginCredentials() {
-    this.authService.login();
+  onFormSubmit() {
+    if (this.loginFormGroup.valid) {
+      console.log('getRawValue():', this.loginFormGroup.getRawValue());
+      console.log('getRawValue():', this.loginFormGroup.getRawValue());
+      this._authService.login();
+      if (this._authService.isAuthenticated()) {
+        this._router.navigate(['home']);
+      }
+    }
   }
 }
