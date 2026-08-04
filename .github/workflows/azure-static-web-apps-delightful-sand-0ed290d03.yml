@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24.15.0
+          node-version: "24"
           cache: npm
           cache-dependency-path: \self_learning\angular\ng-app\package-lock.json
 
