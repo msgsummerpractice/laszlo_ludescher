@@ -52,7 +52,7 @@ jobs:
           skip_app_build: true
 
           # Double-check this path matches where your "Build Angular" step actually outputs files
-          app_location: "frontend/training-app/dist/training-app/browser"
+          app_location: "self_learning/angular/ng-app/dist/ng-app/browser"
           output_location: ""
           api_location: ""
 
