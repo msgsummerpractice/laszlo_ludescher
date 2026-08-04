@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - main
+      - "31.07.2026-Components-Routing-ServicesPipesGuardsInterceptors-ReactiveForms-ConnectingWithBackend"
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+      - "31.07.2026-Components-Routing-ServicesPipesGuardsInterceptors-ReactiveForms-ConnectingWithBackend"
 
 jobs:
   build_and_deploy_job:
