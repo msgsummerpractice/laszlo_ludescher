@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/login", "/error").permitAll();
+                    authorize.requestMatchers("/login", "/logout", "/error").permitAll();
                     authorize.requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN");
                     authorize.requestMatchers("/users/**").hasAnyRole("ADMIN", "USER");
                     authorize.anyRequest().authenticated();
@@ -57,7 +57,7 @@ public class SecurityConfig {
       
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));       
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cookie", "Set-Cookie"));
         configuration.setAllowCredentials(true);
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -65,22 +65,4 @@ public class SecurityConfig {
         return source;
     }
 }
-    /*
-    //in memory UserDetailService for testing
-    @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user = User.builder()
-                .username("user@test.com")
-                .password(passwordEncoder().encode("password"))
-                .roles("USER")
-                .build();
 
-        UserDetails admin = User.builder()
-                .username("admin@test.com")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-        */
