@@ -76,7 +76,7 @@ public class UserService {
 
     public UserResponse findByEmail(String email) {
         Optional<User> userOpt = this.userRepo.findByEmail(email);
-        if (this.userRepo.findByEmail(email).isPresent()) {
+        if (this.userRepo.findByEmail(email).isEmpty()) {
             throw new IllegalArgumentException("There is no user with this email");
         }
         return this.convertToResponse(userOpt.get());
