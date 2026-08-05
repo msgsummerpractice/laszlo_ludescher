@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.spring_boot_project.dto.UserRequest;
 import com.example.spring_boot_project.dto.UserResponse;
 import com.example.spring_boot_project.model.User;
 import com.example.spring_boot_project.repository.UserRepo;
@@ -38,19 +39,17 @@ public class UserService {
         return this.convertToResponse(user);
     }
 
-    public UserResponse update(User newUser, Long id) {
+    public UserResponse update(Long id, UserRequest request) {
         return this.userRepo.findById(id)
         .map(user -> {
-            user.setUsername(newUser.getUsername());
-            user.setPassword(newUser.getPassword());
-            user.setEmail(newUser.getEmail());
-            user.setFirstName(newUser.getFirstName());
-            user.setLastName(newUser.getLastName());
+            user.setUsername(request.getUsername());
+            user.setPassword(request.getPassword());
+            user.setEmail(request.getEmail());
+            user.setFirstName(request.getFirstName());
+            user.setLastName(request.getLastName());
             return this.convertToResponse(this.userRepo.save(user));
         })
-        .orElseGet(() -> {
-            return this.convertToResponse(this.userRepo.save(newUser));
-        });
+        .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
     }
 
     public Page<UserResponse> findAll(int page, int size) {
@@ -108,9 +107,10 @@ public class UserService {
         response.setLastName(user.getLastName());
         return response;
     }
-
+    
     public String encryptPassword(String password) {
         encoder.encode(password);
         return password;
     }
+    
 }

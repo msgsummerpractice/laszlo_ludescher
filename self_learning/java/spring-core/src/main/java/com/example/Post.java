@@ -24,6 +24,6 @@ public class Post implements Message {
     }
 
     public void showMessage() {
-        System.out.println(this.getMessage() + "from" + this.user.getName());
+        System.out.println(this.getMessage() + " from " + this.user.getName());
     }
 }

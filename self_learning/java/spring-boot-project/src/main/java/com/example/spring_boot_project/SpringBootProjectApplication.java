@@ -12,10 +12,10 @@ import com.example.spring_boot_project.model.Role;
 import com.example.spring_boot_project.model.User;
 import com.example.spring_boot_project.repository.RoleRepo;
 import com.example.spring_boot_project.repository.UserRepo;
-import com.example.spring_boot_project.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.example.spring_boot_project.service.UserService;
 
 
 @SpringBootApplication
