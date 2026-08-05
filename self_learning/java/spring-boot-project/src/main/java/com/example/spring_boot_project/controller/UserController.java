@@ -62,21 +62,10 @@ public class UserController {
     @PutMapping(value="/{id}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     ResponseEntity<UserResponse> newUser(@Valid @RequestBody UserRequest request, @PathVariable Long id) {
-        try {
-            userService.findById(id);
-            User user = new User();
-            user.setUsername(request.getUsername());
-            user.setEmail(request.getEmail());
-            user.setPassword(userService.encryptPassword(request.getPassword())); 
-            user.setFirstName(request.getFirstName());
-            user.setLastName(request.getLastName());
-            return ResponseEntity.ok(userService.update(user, id));
-        }
-        catch (IllegalArgumentException e){
-            return ResponseEntity.status(HttpStatus.CREATED).body(
-                userService.create(request.getUsername(),request.getEmail(),request.getPassword(),request.getFirstName(), request.getLastName())
-            );
-        }       
+        
+        UserResponse updatedUser = userService.update(id, request);
+    
+        return ResponseEntity.ok(updatedUser);     
     }
 
     @DeleteMapping(value="/{id}")
