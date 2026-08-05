@@ -11,8 +11,6 @@ import java.util.List;
 import com.example.spring_boot_project.model.User;
 import com.example.spring_boot_project.repository.UserRepo;
 
-import jakarta.transaction.Transactional;
-
 @SpringBootTest
 public class UserRepoTest {
     @Autowired
