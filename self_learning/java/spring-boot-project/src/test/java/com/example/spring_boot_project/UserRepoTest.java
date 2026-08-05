@@ -11,10 +11,7 @@ import java.util.List;
 import com.example.spring_boot_project.model.User;
 import com.example.spring_boot_project.repository.UserRepo;
 
-import jakarta.transaction.Transactional;
-
 @SpringBootTest
-@Transactional
 public class UserRepoTest {
     @Autowired
     private UserRepo userRepo;
@@ -26,20 +23,20 @@ public class UserRepoTest {
 
     @Test
     public void testFindTopTenUsersByUsername() {
-        User user1 = new User("name1", "name1@test.com", "pwd", "firstName", "lastName");
-        User user2 = new User("name2", "name1@test.com", "pwd", "firstName", "lastName");
-        User user3 = new User("name3", "name1@test.com", "pwd", "firstName", "lastName");
-        User user4 = new User("name4", "name1@test.com", "pwd", "firstName", "lastName");
-        User user5 = new User("name5", "name1@test.com", "pwd", "firstName", "lastName");
-        User user6 = new User("name6", "name1@test.com", "pwd", "firstName", "lastName");
-        User user7 = new User("name7", "name1@test.com", "pwd", "firstName", "lastName");
-        User user8 = new User("name8", "name1@test.com", "pwd", "firstName", "lastName");
-        User user9 = new User("name9", "name1@test.com", "pwd", "firstName", "lastName");
-        User user10 = new User("name10", "name1@test.com", "pwd", "firstName", "lastName");
-        User user11 = new User("name11", "name1@test.com", "pwd", "firstName", "lastName");
-        User user12 = new User("name12", "name1@test.com", "pwd", "firstName", "lastName");
-        User user13 = new User("name13", "name1@test.com", "pwd", "firstName", "lastName");
-        User user14 = new User("name14", "name1@test.com", "pwd", "firstName", "lastName");
+        User user1 = new User("name1", "name1@test.com", "name1pwd", "firstName", "lastName");
+        User user2 = new User("name2", "name2@test.com", "name2pwd", "firstName", "lastName");
+        User user3 = new User("name3", "name3@test.com", "name3pwd", "firstName", "lastName");
+        User user4 = new User("name4", "name4@test.com", "name4pwd", "firstName", "lastName");
+        User user5 = new User("name5", "name5@test.com", "name5pwd", "firstName", "lastName");
+        User user6 = new User("name6", "name6@test.com", "name6pwd", "firstName", "lastName");
+        User user7 = new User("name7", "name7@test.com", "name7pwd", "firstName", "lastName");
+        User user8 = new User("name8", "name8@test.com", "name8pwd", "firstName", "lastName");
+        User user9 = new User("name9", "name9@test.com", "name9pwd", "firstName", "lastName");
+        User user10 = new User("name10", "name10@test.com", "name10pwd", "firstName", "lastName");
+        User user11 = new User("name11", "name11@test.com", "name11pwd", "firstName", "lastName");
+        User user12 = new User("name12", "name12@test.com", "name12pwd", "firstName", "lastName");
+        User user13 = new User("name13", "name13@test.com", "name13pwd", "firstName", "lastName");
+        User user14 = new User("name14", "name14@test.com", "name14pwd", "firstName", "lastName");
 
         userRepo.save(user1);
         userRepo.save(user2);
