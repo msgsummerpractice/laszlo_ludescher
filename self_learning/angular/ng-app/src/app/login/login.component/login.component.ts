@@ -1,14 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../auth.service/auth.service';
 import {
-  FormGroup,
-  FormsModule,
   FormControl,
   ReactiveFormsModule,
   NonNullableFormBuilder,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IfAuthenticatedDirective } from '../current-user.component/current-user.component';
 
 type LoginForm = {
   email: FormControl<string>;
@@ -17,14 +16,16 @@ type LoginForm = {
 
 @Component({
   selector: 'login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, IfAuthenticatedDirective],
   templateUrl: './login.component.html',
 })
 export class Login {
-  private _authService: AuthService = inject(AuthService);
+  public _authService: AuthService = inject(AuthService);
   private _router: Router = inject(Router);
 
   private readonly _formBuilder = inject(NonNullableFormBuilder);
+
+  public isAuthenticated = this._authService.isAuthenticated;
 
   protected readonly loginFormGroup = this._formBuilder.group<LoginForm>({
     email: this._formBuilder.control('', Validators.required),
@@ -46,5 +47,8 @@ export class Login {
       if (this._authService.isAuthenticated()) {
       }
     }
+  }
+  onLogout() {
+    this._authService.logout();
   }
 }
