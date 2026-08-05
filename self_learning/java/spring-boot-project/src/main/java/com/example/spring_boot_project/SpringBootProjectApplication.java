@@ -18,8 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class SpringBootProjectApplication {
-	private static final Logger log = LoggerFactory.getLogger(UserService.class);
-
+private static final Logger log = LoggerFactory.getLogger(SpringBootProjectApplication.class);
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(SpringBootProjectApplication.class, args);
 		RoleRepo roleRepo = context.getBean(RoleRepo.class);

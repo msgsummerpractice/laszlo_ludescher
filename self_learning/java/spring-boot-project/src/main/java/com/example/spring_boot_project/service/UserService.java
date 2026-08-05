@@ -14,7 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private UserRepo userRepo;
