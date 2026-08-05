@@ -1,6 +1,4 @@
 package com.example.spring_boot_project.service;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -12,12 +10,18 @@ import org.springframework.stereotype.Service;
 import com.example.spring_boot_project.dto.UserResponse;
 import com.example.spring_boot_project.model.User;
 import com.example.spring_boot_project.repository.UserRepo;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 @Service
 public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private UserRepo userRepo;
-
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
@@ -104,9 +108,9 @@ public class UserService {
         response.setLastName(user.getLastName());
         return response;
     }
-
+    
     public String encryptPassword(String password) {
-        /*TODO: encription */
-        return password;
+        return passwordEncoder.encode(password) ;
     }
+    
 }
