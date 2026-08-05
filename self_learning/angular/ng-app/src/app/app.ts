@@ -1,14 +1,10 @@
 import { Component, signal } from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { RouterOutlet } from '@angular/router';
-import { ImageViewerComponent } from './components/image-viewer.component';
-import { HttpClient } from '@angular/common/http';
+import { NavBar } from './components/nav-bar.component/nav-bar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatButton, MatToolbarRow, MatIcon, ImageViewerComponent],
+  imports: [RouterOutlet, NavBar],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

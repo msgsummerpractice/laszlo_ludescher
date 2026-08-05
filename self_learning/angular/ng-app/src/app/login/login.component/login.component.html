@@ -1,0 +1,67 @@
+<div class="flex flex-col relative h-screen bg-olive-300">
+  <div
+    class="p-32 flex-1 flex-col items-center justify-center w-full py-20 bg-linear-to-b from-olive-300 to-olive-400 text-white/70"
+  >
+    <div
+      class="bg-slate-300 px-8 py-4 border border-olive-400 shadow-xl/30 flex flex-col items-center justify-evenly rounded-xl"
+    >
+      <h2 *appIfAuthenticated class="text-slate-900 text-xl font-semibold mb-6">
+        You are logged in
+      </h2>
+      <button
+        *appIfAuthenticated
+        (click)="onLogout()"
+        class="text-slate-900 border border-solid border-olive-400 rounded-xl p-2"
+      >
+        Log out
+      </button>
+      @if (isAuthenticated() === false) {
+        <h2 class="text-slate-900 text-lg font-semibold p-8">Log in</h2>
+        <form
+          novalidate
+          [formGroup]="loginFormGroup"
+          (ngSubmit)="onFormSubmit()"
+          class="flex flex-col justify-around p-4"
+        >
+          <label for="email" type="email" class="text-slate-900"
+            >Enter your email:
+            <input
+              type="text"
+              formControlName="email"
+              class="border border-solid border-olive-400 rounded-md"
+          /></label>
+          @if (loginFormGroup.controls.email.invalid) {
+            <small class="text-error text-slate-900">Email is required.</small>
+          }
+          <br />
+          <label for="password" type="password" class="text-slate-900"
+            >Enter your password:
+            <input
+              type="password"
+              formControlName="password"
+              class="border border-solid border-olive-400 rounded-md"
+          /></label>
+          @if (loginFormGroup.controls.password.invalid) {
+            <small class="text-error text-slate-900">Password is required.</small>
+          }
+          <br />
+          @if (loginFormGroup.controls.email.invalid || loginFormGroup.controls.email.invalid) {
+            <button
+              type="submit"
+              class="text-slate-900 border border-solid border-olive-400 rounded-xl p-2"
+            >
+              Enter
+            </button>
+          } @else {
+            <button
+              type="submit"
+              class="text-slate-900 border border-solid border-olive-400 rounded-xl"
+            >
+              Enter
+            </button>
+          }
+        </form>
+      }
+    </div>
+  </div>
+</div>
