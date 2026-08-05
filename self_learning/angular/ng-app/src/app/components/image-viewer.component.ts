@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { interval } from 'rxjs';
-import { sample } from 'rxjs/operators';
-import { fromFetch } from 'rxjs/fetch';
 import { signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+
+type DogApiResponse = {
+  message: string;
+  status: string;
+};
 
 @Component({
   selector: 'image-viewer',
@@ -40,18 +41,16 @@ import { HttpClient } from '@angular/common/http';
 export class ImageViewerComponent {
   imageUrl = signal<string | null>(null);
   private http = inject(HttpClient);
+  private sub?: Subscription;
   showDogImage() {
-    type DogApiResponse = {
-      message: string;
-      status: string;
-    };
-
-    this.http
-      .get<DogApiResponse>('https://dog.ceo/api/breeds/image/random', {
-        responseType: 'json',
-      })
+    this.sub = this.http
+      .get<DogApiResponse>('https://dog.ceo/api/breeds/image/random')
       .subscribe((response) => {
         this.imageUrl.set(response.message);
       });
+  }
+
+  ngOnDestroy() {
+    this.sub?.unsubscribe();
   }
 }
