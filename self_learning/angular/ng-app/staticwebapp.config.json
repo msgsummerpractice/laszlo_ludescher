@@ -13,6 +13,6 @@
   },
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/assets/*", "/*.js", "/*.scss", "/*.ico"]
+    "exclude": ["/images/*.{png,jpg,gif}", "/css/*"]
   }
 }
