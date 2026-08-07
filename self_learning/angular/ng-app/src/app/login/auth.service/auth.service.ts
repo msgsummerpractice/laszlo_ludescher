@@ -1,6 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 type LoginRequest = {
   email: string;
@@ -13,12 +14,12 @@ type LoginResponse = void;
 export class AuthService {
   isAuthenticated = signal(localStorage.getItem('isLoggedIn') === 'true');
   private http = inject(HttpClient);
-
+  private readonly baseUrl = environment.apiUrl;
   login(email: string, password: string) {
     const body: LoginRequest = { email, password };
 
     return this.http
-      .post<LoginResponse>('http://localhost:8081/login', body, { withCredentials: true })
+      .post<LoginResponse>(`${this.baseUrl}/login`, body, { withCredentials: true })
       .pipe(
         tap({
           next: (response) => {
@@ -37,7 +38,7 @@ export class AuthService {
     localStorage.removeItem('isLoggedIn');
     this.isAuthenticated.set(false);
     this.isAuthenticated.set(false);
-    this.http.post('http://localhost:8081/logout', {}, { withCredentials: true }).subscribe({
+    this.http.post(`${this.baseUrl}/logout`, {}, { withCredentials: true }).subscribe({
       error: (err) => console.error('Logout failed:', err),
     });
   }
