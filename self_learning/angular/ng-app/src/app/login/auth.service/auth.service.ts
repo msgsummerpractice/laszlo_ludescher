@@ -22,7 +22,7 @@ export class AuthService {
       .post<LoginResponse>(`${this.baseUrl}/login`, body, { withCredentials: true })
       .pipe(
         tap({
-          next: (response) => {
+          next: () => {
             localStorage.setItem('isLoggedIn', 'true');
             this.isAuthenticated.set(true);
           },

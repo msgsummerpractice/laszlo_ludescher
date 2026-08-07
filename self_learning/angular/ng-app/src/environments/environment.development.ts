@@ -1,3 +1,5 @@
 export const environment = {
-  apiUrl: 'http://localhost:8081',
+  apiUrl:
+    'https://laszlo-container-backend.internal.ashywater-8898f957.westeurope.azurecontainerapps.io',
+  //apiUrl: 'http://localhost:8081',
 };
